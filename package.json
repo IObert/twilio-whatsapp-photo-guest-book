@@ -1,0 +1,27 @@
+{
+  "name": "photogallery",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deb": "node functions/test.js ",
+    "start": "twilio-run",
+    "deploy": "twilio-run deploy",
+    "build-deploy": "cd frontend && npm run build && cp -a ./build/. ../assets && cd .. && twilio serverless:deploy"
+  },
+  "dependencies": {
+    "@twilio/runtime-handler": "1.2.3",
+    "airtable": "^0.11.4",
+    "axios": "^0.27.2",
+    "maskdata": "^1.1.10",
+    "react-image-lightbox": "^5.1.4",
+    "timeago.js": "^4.0.2",
+    "twilio": "^3.56"
+  },
+  "devDependencies": {
+    "twilio-run": "^3.4.2"
+  },
+  "engines": {
+    "node": "16"
+  }
+}
