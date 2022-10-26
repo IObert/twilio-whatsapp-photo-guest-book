@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
+import Box from "@material-ui/core/Box";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import { Skeleton } from "@material-ui/lab";
@@ -14,8 +15,8 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: "5px",
-    display: "flex",
+    marginTop: "10px",
+    width: "100%",
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
@@ -24,13 +25,6 @@ const useStyles = makeStyles((theme) => ({
   gridList: {
     width: 1000,
     height: 1000,
-  },
-  titleBar: {
-    background:
-      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-  },
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)",
   },
 }));
 
@@ -43,7 +37,7 @@ export default function TitlebarGridList() {
 
   if (error) return <div>failed to load</div>;
 
-  const currentMedium = data && data[index];
+  const currentMedium = data[index];
 
   return (
     <div className={classes.root}>
@@ -52,32 +46,37 @@ export default function TitlebarGridList() {
         cols={windowDimensions.width > windowDimensions.height ? 5 : 3}
         rowHeight={200}
       >
-        {data
-          ? data.map((media, index) => (
-              <ImageListItem
-                key={`list-${index}`}
-                cols={1}
-                rows={1}
-                onClick={() => {
-                  media.contentType.indexOf("video") && setIndex(index);
-                }}
-              >
-                {media.contentType.indexOf("video") ? (
-                  <img src={media.src} alt={media.caption} loading="lazy" />
-                ) : (
-                  <video autoPlay controls muted loop>
-                    <source src={media.src} type={media.contentType} />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
-                {media.caption && <ImageListItemBar title={media.caption} />}
-              </ImageListItem>
-            ))
-          : [...Array(15)].map((_, i) => (
-              <ImageListItem key={`skeleton-${i}`} cols={1} rows={1}>
-                <Skeleton variant="rect" />
-              </ImageListItem>
-            ))}
+        {data.map((media, index) =>
+          media ? (
+            <ImageListItem
+              key={`list-${index}`}
+              cols={1}
+              rows={1}
+              onClick={() => {
+                media.contentType.indexOf("video") && setIndex(index);
+              }}
+            >
+              {media.contentType.indexOf("video") ? (
+                <img src={media.src} alt={media.caption} loading="lazy" />
+              ) : (
+                <video autoPlay controls muted loop>
+                  <source src={media.src} type={media.contentType} />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+              {media.caption && <ImageListItemBar title={media.caption} />}
+            </ImageListItem>
+          ) : (
+            <Box
+              key={`list-${index}`}
+              sx={{
+                boxSizing: "border-box",
+              }}
+            >
+              <Skeleton variant="rect" height="100%" />
+            </Box>
+          )
+        )}
       </ImageList>
       {currentMedium && (
         <Lightbox
