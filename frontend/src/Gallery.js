@@ -4,6 +4,7 @@ import ImageList from "@material-ui/core/ImageList";
 import Box from "@material-ui/core/Box";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
+import Alert from '@material-ui/lab/Alert';
 import { Skeleton } from "@material-ui/lab";
 import "react-image-lightbox/style.css";
 import Lightbox from "react-image-lightbox";
@@ -22,20 +23,27 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
-  gridList: {
-    width: 1000,
-    height: 1000,
+  alert: {
+    position: "absolute",
+    width: "95%",
+    bottom: "10px",
+    padding: "10px"
   },
 }));
 
-export default function TitlebarGridList() {
+export default function Gallery() {
   const classes = useStyles();
   const windowDimensions = useWindowDimensions();
   const { data, error } = useSWR("/images", fetcher);
 
   const [index, setIndex] = useState(-1);
 
-  if (error) return <div>failed to load</div>;
+  if (error)
+    return (
+      <Alert variant="filled" severity="error" className={classes.alert}>
+       Es lief etwas schief :( 
+      </Alert>
+    );
 
   const currentMedium = data[index];
 

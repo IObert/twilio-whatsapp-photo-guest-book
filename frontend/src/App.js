@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { SWRConfig } from "swr";
 import ButtonAppBar from "./Header";
-import TitlebarGridList from "./Cards";
+import Gallery from "./Gallery";
 // import MyButton from './components/Footer'
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
         }}
       >
         <ButtonAppBar />
-        <TitlebarGridList />
+        <Gallery />
       </SWRConfig>
     );
   }

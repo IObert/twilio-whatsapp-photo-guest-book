@@ -4,7 +4,7 @@ Missing features
 
 
 
-    Show placeholder while loading
+UPDATE ON HOW MANY IMAGE ALREADY SUBMITTED?
 
 Danke, dass du dich entschieden hast, Bilder mit dem Brautpaar zu teilen. Das Ganze ist auch kinderleicht. Alles, was du tun musst, ist mir die Bilder zu schicken und ich werde sie dann hier anzeigen.
 
@@ -28,6 +28,7 @@ Backend
     Implement sorting and filtering in backend
     Translate the caption to German too
     Paging possible in backend via the .list() function?
+    count total number of images, measure why the request takes so long, is the the retrieval or processing or rendering?
 
 UI
     Add header with filter and sort by
