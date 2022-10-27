@@ -7,14 +7,15 @@ const maskPhoneOptions = {
   unmaskedEndDigits: 4,
 };
 
-exports.handler = async function (context, event, callback) {
+exports.handler = async function (context, event, callback) { //TODO Implement paging
   let client = context.getTwilioClient();
 
   const messages = await client.messages.list({
     to: "whatsapp:+4915735987800",
   });
 
-  const images = await Promise.all(
+
+  let images = await Promise.all(
     messages.map(async (message) => {
       const phone = message.from.replace("whatsapp:", "");
       const mediaURL = message.subresourceUris.media;
@@ -35,10 +36,6 @@ exports.handler = async function (context, event, callback) {
       const media = mediaRes.data.media_list[0];
 
       if (!media) {
-        return undefined;
-      }
-      if (media.content_type.indexOf("video") > 0){
-        // TODO skip videos for now, add back later
         return undefined;
       }
 
@@ -71,8 +68,7 @@ exports.handler = async function (context, event, callback) {
     })
   );
 
-  callback(
-    null,
-    images.filter((image) => !!image)
-  );
+
+  images = images.filter((image) => !!image);
+  callback(null, images);
 };
