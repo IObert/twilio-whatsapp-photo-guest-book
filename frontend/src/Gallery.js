@@ -8,11 +8,13 @@ import Alert from '@material-ui/lab/Alert';
 import { Skeleton } from "@material-ui/lab";
 import "react-image-lightbox/style.css";
 import Lightbox from "react-image-lightbox";
-import { format } from "timeago.js";
+import {format, register} from "timeago.js";
+import deLocal from "timeago.js/lib/lang/de";
 import useSWR from "swr";
 import useWindowDimensions from "./useWindowDimensions";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
+register("de", deLocal)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,7 +91,7 @@ export default function Gallery() {
       {currentMedium && (
         <Lightbox
           mainSrc={currentMedium.src}
-          imageCaption={`Sent from ${currentMedium.sender} ${format(
+          imageCaption={`Gesendet von ${currentMedium.sender} ${format(
             currentMedium.dateSent,
             "de"
           )}`}

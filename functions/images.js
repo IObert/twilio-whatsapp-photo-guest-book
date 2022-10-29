@@ -8,12 +8,11 @@ const maskPhoneOptions = {
 };
 
 exports.handler = async function (context, event, callback) { //TODO Implement paging
-  let client = context.getTwilioClient();
+  const client = context.getTwilioClient();
 
   const messages = await client.messages.list({
-    to: "whatsapp:+4915735987800",
+    to: `whatsapp:${context.NUMBER}`,
   });
-
 
   let images = await Promise.all(
     messages.map(async (message) => {
