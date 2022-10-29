@@ -12,7 +12,7 @@ const maskPhoneOptions = {
 (async () => {
   const client = new twilio();
 
-  const messages = await client.messages.list({ to: "whatsapp:+4915735987800" });
+  const messages = await client.messages.list({ to: `whatsapp:${context.NUMBER}`, });
 
   const images = await Promise.all(messages.map(async (message) => {
     const phone = message.from.replace("whatsapp:", "");

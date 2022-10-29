@@ -1,22 +1,7 @@
 # Photo Sharing with WhatsApp
 
-Missing features
 
-
-
-UPDATE ON HOW MANY IMAGE ALREADY SUBMITTED?
-
-Danke, dass du dich entschieden hast, Bilder mit dem Brautpaar zu teilen. Das Ganze ist auch kinderleicht. Alles, was du tun musst, ist mir die Bilder zu schicken und ich werde sie dann hier anzeigen.
-
-DSGVO Hinweis:
-Deine Daten werden gelöscht, nachdem ich dem Brautpaar die Bilder übergeben habe. Und abgesehen von einer kleinen Erinnerung morgen Mittag, werde ich dir auch keine unaufgeforderten Nachrichten schicken. Falls du keine Lust darauf hast, brauchst du nichts weiter zu tun, als diese Nachricht zu ignorieren und mir keine Bilder zu schicken.
-
-
-Es sieht so aus, als ob du keinen Anhang geschickt hast. Falls das ein Fehler ist, sag bitte Marius Bescheid.
-
-Danke für das erste Foto. Ich werde dir ab jetzt keine Bestätigungen beim erfolgreichen Empfang der Bilder mehr schicken.
-PS: Du kannst alle Bilder hier finden:
-
+TODO Clear full log of the number to test from scratch
 
 
 Add message handler for
@@ -26,57 +11,38 @@ Add message handler for
 
 Backend
     Implement sorting and filtering in backend
-    Translate the caption to German too
-    Paging possible in backend via the .list() function?
+    Paging in backend via the .list() function, maybe exclude non videos from the query?
     count total number of images, measure why the request takes so long, is the the retrieval or processing or rendering?
 
 UI
     Add header with filter and sort by
+    initiy scrolling with paging
     Make a PWA
 
 
-Test with 1000s of pictures (by copying the array elements in the backend)
-    initiy scrolling needed?
-PWA for easy access
-    Add favicon and icon (S? or just a heart? emoji)
+## Installation
 
+* Buy a number you want to use and enable it for WhatsApp
 
+* Create Messaging Service
 
-### How does it work
+* Replace env var files `.env`
 
-```bash
-npm i
-cd frontend
-npm i --force
-cd ..
-npm run build-deploy
-```
+* Deploy the project 
+    ```bash
+    npm install
+    npm run build-deploy
+    ```
 
-Then you should see the URL of the function assets. This URL contains the funtion id, e.g. `waquiz-1860-dev` in `https://waquiz-1860-dev.twil.io`. Take this ID and replace all occures of `<replace-with-function-id>` with it.
+* Give out QR codes so that users can send messages to the registered number
 
-Then go to <https://twilio.com/console/studio> and create two new flows `quiz-flow` and `orchestrator-flow` based on the files in `/studio-flows`.
+## Folder structure
 
-Fix the `orchestrator-flow` so that it links to the `quiz-flow`
+### Functions
 
-Create a messaging service and add your number and WhatsApp number to the sender pool and the `webhook URL` of the `orchestrator-flow` as the integration.
+There are two Functions used. The first one, `incoming.js`, handles incoming messages and returns TwiML responses to the senders. The other one, `images.js`, returns the media URLs found in the logs to the frontend (incl some meta data).
 
-Create a new Airtable base and copy the `.env_example` to `.env` and replace all values before running the deploy command once again: //TODO: The varibable name is QUIZ_FLOW_SID but we actually need to link to the Orchestrator flow. This was confusing to me
-
-```bash
-npm run build-deploy
-```
-
-TODO: Add how Airtable needs to be structured and which data need to be added manually
-
-## Start the quiz
-
-```bash
-curl -d quiz_key=123456 -d quiz_num=1 https://<replace-with-function-id>.twil.io/quiz/start
-```
-
-### Folder structure
-
-#### Frontend:
+### Frontend
 
 The frontend code is present inside the `frontend` folder.
 
@@ -84,20 +50,19 @@ The entire setup is hosted on Twilio Serverless and the frontend is served as st
 
 While the frontend is a react app, to update the frontend.
 
-Build the react app
+Test the react app locally
 
+1. Deploy the backend 
 ```bash
-npm run build
+npm run build-deploy
 ```
 
-Copy the build static assets to the serverless assets folder
+2. Adapt the `proxy` field in the `package.json` of the frontend app.
 
+3. Run it locally
 ```bash
-cp ./build ../assets/
+npm run start
 ```
 
-Deploy the project to your environment
 
-```bash
-twilio serverless:deploy
-```
+
