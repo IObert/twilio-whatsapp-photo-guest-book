@@ -1,21 +1,12 @@
 # Photo Sharing with WhatsApp
 
 
-TODO Clear full log of the number to test from scratch
-
-
-Add message handler for
-    Send reminders after initial convo, send link to gallery
-    Thank for sending more images
-    Send error messagen when no picture was sent
-
 Backend
-    Implement sorting and filtering in backend
     Paging in backend via the .list() function, maybe exclude non videos from the query?
     count total number of images, measure why the request takes so long, is the the retrieval or processing or rendering?
+    Add script to download all images to files
 
 UI
-    Add header with filter and sort by
     initiy scrolling with paging
     Make a PWA
 

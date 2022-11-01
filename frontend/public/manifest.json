@@ -1,5 +1,5 @@
 {
-  "short_name": "Hochzeitsgalerie",
+  "short_name": "Galerie",
   "name": "Hochzeitsgalerie",
   "icons": [
     {
@@ -18,8 +18,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
+  "start_url": "/",
+  "prefer_related_applications": true,
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }
