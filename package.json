@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deb": "node ./test.js ",
+    "dowload": "node ./download.js ",
     "start": "twilio-run",
     "deploy": "twilio-run deploy",
     "build-deploy": "cd frontend && npm run build && cp -a ./build/. ../assets && cd .. && twilio serverless:deploy"

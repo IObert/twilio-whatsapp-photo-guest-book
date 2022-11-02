@@ -8,7 +8,6 @@ Backend
 
 UI
     initiy scrolling with paging
-    Make a PWA
 
 
 ## Installation
@@ -56,4 +55,11 @@ npm run start
 ```
 
 
+
+## Download all files
+
+To download all received media files, you need to run the following script and wait to the downloads to complete.
+```
+npm run download
+```
 
