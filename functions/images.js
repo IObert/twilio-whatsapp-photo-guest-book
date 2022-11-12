@@ -7,7 +7,7 @@ const maskPhoneOptions = {
   unmaskedEndDigits: 4,
 };
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 15;
 
 exports.handler = async function (context, event, callback) {
   const client = context.getTwilioClient();
