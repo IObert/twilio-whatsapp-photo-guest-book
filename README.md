@@ -1,15 +1,6 @@
 # Photo Sharing with WhatsApp
 
 
-Backend
-    Paging in backend via the .list() function, maybe exclude non videos from the query?
-    count total number of images, measure why the request takes so long, is the the retrieval or processing or rendering?
-    Add script to download all images to files
-
-UI
-    initiy scrolling with paging
-
-
 ## Installation
 
 * Buy a number you want to use and enable it for WhatsApp
