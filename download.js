@@ -1,11 +1,14 @@
 const twilio = require("twilio");
 require("dotenv").load();
-const MaskData = require("maskdata");
 const axios = require("axios");
 const fs = require("fs");
 
 const NUMBER = "+4915735987800";
 const client = new twilio();
+
+const logger = fs.createWriteStream("downloads/senders.txt", {
+  flags: "a", // 'a' means appending (old data will be preserved)
+});
 
 client.messages.each(
   {
@@ -36,6 +39,7 @@ client.messages.each(
 
     const fileEnding = media.content_type.replace(/.*\//g, "");
     const file = fs.createWriteStream(`downloads/${media.sid}.${fileEnding}`);
+    logger.write(`${media.sid}.${fileEnding} - ${message.from} - ${message.body}\n`) 
 
     console.time(`Download ${media.sid}.${fileEnding}`);
 
