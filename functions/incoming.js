@@ -21,7 +21,6 @@ ich wollte nur kurz nachfragen, ob du gestern ein paar schöne Bilder gemacht ha
     from: event.To,
   });
 
-
   const isFirstMessage = prevCorrespondence.length === 0,
     hasReceivedImagesBefore = prevCorrespondence.some(
       (m) => m.body.indexOf(firstMediaResponse) >= 0
