@@ -7,15 +7,19 @@ const maskPhoneOptions = {
   unmaskedEndDigits: 4,
 };
 
-exports.handler = async function (context, event, callback) { //TODO Implement paging
-  const client = context.getTwilioClient();
+const PAGE_SIZE = 4;
 
-  const messages = await client.messages.list({
+exports.handler = async function (context, event, callback) {
+  const client = context.getTwilioClient();
+  const page = await client.messages.page({
     to: `whatsapp:${context.NUMBER}`,
+    pageSize: PAGE_SIZE,
+    pageNumber: event.page || 0,
+    pageToken: event.pageToken,
   });
 
   let images = await Promise.all(
-    messages.map(async (message) => {
+    page.instances.map(async (message) => {
       const phone = message.from.replace("whatsapp:", "");
       const mediaURL = message.subresourceUris.media;
 
@@ -67,7 +71,9 @@ exports.handler = async function (context, event, callback) { //TODO Implement p
     })
   );
 
-
-  images = images.filter((image) => !!image);
-  callback(null, images);
+  callback(null, {
+    images: images.filter((image) => !!image),
+    pageSize: PAGE_SIZE,
+    pageToken: page.nextPageUrl && page.nextPageUrl.match(/PageToken=(.*)/)[1],
+  });
 };
