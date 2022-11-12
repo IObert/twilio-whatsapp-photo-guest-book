@@ -171,7 +171,7 @@ export default function Gallery() {
             (
               images[(index + images.length - 1) % images.length] ||
               images[index]
-            ).src 
+            ).src
           }
           prevSrc={(images[(index + 1) % images.length] || images[index]).src}
           onCloseRequest={() => setIndex(-1)}

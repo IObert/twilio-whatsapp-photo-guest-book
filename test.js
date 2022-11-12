@@ -18,13 +18,13 @@ const NUMBER = "+4915735987800";
     to: `whatsapp:${NUMBER}`,
     pageSize: 4,
     pageNumber: 19,
-    pageToken: "PAMM18bc1314deec75e52cff0dda0bc8636b"
+    pageToken: "PAMM18bc1314deec75e52cff0dda0bc8636b",
   }); //TODO change to .each to stream https://www.twilio.com/docs/libraries/reference/twilio-node/3.5.0/Twilio.Api.V2010.AccountContext.MessageList.html#each
   // https://www.twilio.com/docs/libraries/reference/twilio-node/3.5.0/Twilio.Api.V2010.AccountContext.MessageList.html#each
   // https://www.twilio.com/blog/replacing-absolute-paging-and-related-properties
   // https://swr.vercel.app/docs/pagination
 
-  console.log(page.nextPageUrl)
+  console.log(page.nextPageUrl);
   const messages = page.instances;
   const images = await Promise.all(
     messages.map(async (message) => {
@@ -74,8 +74,7 @@ const NUMBER = "+4915735987800";
   );
 
   console.log({
-    images:images.filter((image) => !!image),
-    pageToken: page.nextPageUrl && page.nextPageUrl.match(/PageToken=(.*)/)[1]
-  })
-
+    images: images.filter((image) => !!image),
+    pageToken: page.nextPageUrl && page.nextPageUrl.match(/PageToken=(.*)/)[1],
+  });
 })();

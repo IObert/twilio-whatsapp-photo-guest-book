@@ -1,21 +1,21 @@
 # Photo Sharing with WhatsApp
 
-
 ## Installation
 
-* Buy a number you want to use and enable it for WhatsApp
+- Buy a number you want to use and enable it for WhatsApp
 
-* Create Messaging Service
+- Create Messaging Service
 
-* Replace env var files `.env`
+- Replace env var files `.env`
 
-* Deploy the project 
-    ```bash
-    npm install
-    npm run build-deploy
-    ```
+- Deploy the project
 
-* Give out QR codes so that users can send messages to the registered number
+  ```bash
+  npm install
+  npm run build-deploy
+  ```
+
+- Give out QR codes so that users can send messages to the registered number
 
 ## Folder structure
 
@@ -33,7 +33,8 @@ While the frontend is a react app, to update the frontend.
 
 Test the react app locally
 
-1. Deploy the backend 
+1. Deploy the backend
+
 ```bash
 npm run build-deploy
 ```
@@ -41,16 +42,15 @@ npm run build-deploy
 2. Adapt the `proxy` field in the `package.json` of the frontend app.
 
 3. Run it locally
+
 ```bash
 npm run start
 ```
 
-
-
 ## Download all files
 
 To download all received media files, you need to run the following script and wait to the downloads to complete.
+
 ```
 npm run download
 ```
-
