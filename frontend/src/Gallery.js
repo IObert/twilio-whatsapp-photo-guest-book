@@ -92,14 +92,9 @@ export default function Gallery() {
     );
   }
 
-  let images = data ? data.map((p) => p.images).flat() : [];
-  if (isValidating) {
-    const pageSize = data ? data[0].pageSize : 30;
-    images = images.concat(
-      images,
-      [...Array(pageSize)].map(() => null)
-    );
-  }
+  let images = data
+    ? data.map((p) => p.images).flat()
+    : [...Array(60)].map(() => null);
 
   return (
     <div className={classes.root}>
@@ -110,10 +105,10 @@ export default function Gallery() {
       ) : (
         <ImageList
           variant="quilted"
-          cols={windowDimensions.width > windowDimensions.height ? 2 : 1}
-          // cols={windowDimensions.width > windowDimensions.height ? 5 : 3}
-          rowHeight={700}
-          // rowHeight={200}
+          // cols={windowDimensions.width > windowDimensions.height ? 2 : 1}
+          cols={windowDimensions.width > windowDimensions.height ? 5 : 3}
+          // rowHeight={700}
+          rowHeight={200}
         >
           {images.map((media, imageIdx) =>
             media ? (
