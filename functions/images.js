@@ -73,7 +73,6 @@ exports.handler = async function (context, event, callback) {
 
   callback(null, {
     images: images.filter((image) => !!image),
-    pageSize: PAGE_SIZE,
-    pageToken: page.nextPageUrl && page.nextPageUrl.match(/PageToken=(.*)/)[1],
+    pageToken: page.nextPageUrl && page.nextPageUrl.match(/PageToken=(.*)/)[1], // no page token means no more pages
   });
 };

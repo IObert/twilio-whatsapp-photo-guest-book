@@ -20,10 +20,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 register("de", deLocal);
 
 const getKey = (pageIndex, previousPageData) => {
-  if (
-    previousPageData &&
-    previousPageData.pageSize != previousPageData.images.length
-  ) {
+  if (previousPageData && !previousPageData.pageToken) {
     return null; // reached the end
   }
   let key = `/images?page=${pageIndex}`;
@@ -33,9 +30,12 @@ const getKey = (pageIndex, previousPageData) => {
   return key;
 };
 
-const isLastPageFull = (pages) => {
-  const lastPage = pages[pages.length - 1];
-  return lastPage.pageSize > lastPage.images.length;
+const isLastPage = (pages) => {
+  if (!pages) {
+    return false;
+  }
+  const mostRecentPage = pages[pages.length - 1];
+  return !mostRecentPage.pageToken;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -146,11 +146,7 @@ export default function Gallery() {
       {
         <LinearProgress
           ref={refLoader}
-          className={
-            isValidating || !isLastPageFull(data)
-              ? classes.loading
-              : classes.completed
-          }
+          className={!isLastPage(data) ? classes.loading : classes.completed}
         />
       }
 
