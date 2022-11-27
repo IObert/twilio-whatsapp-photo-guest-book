@@ -135,5 +135,6 @@ dist
 
 assets/*
 frontend/build
+test.js
 
 downloads/*

@@ -3,7 +3,7 @@ require("dotenv").load();
 const axios = require("axios");
 const fs = require("fs");
 
-const NUMBER = "+4915735987800";
+const NUMBER = process.env.NUMBER;
 const client = new twilio();
 
 const logger = fs.createWriteStream("downloads/senders.txt", {
