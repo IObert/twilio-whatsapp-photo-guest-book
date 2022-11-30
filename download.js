@@ -6,6 +6,8 @@ const fs = require("fs");
 const NUMBER = process.env.NUMBER;
 const client = new twilio();
 
+const senders = new Set();
+
 const logger = fs.createWriteStream("downloads/senders.txt", {
   flags: "a", // 'a' means appending (old data will be preserved)
 });
@@ -17,6 +19,7 @@ client.messages.each(
   },
   async function (message) {
     const mediaURL = message.subresourceUris.media;
+    senders.add(message.from);
 
     const mediaRes = await axios({
       url: `https://api.twilio.com${mediaURL}`,
@@ -39,7 +42,9 @@ client.messages.each(
 
     const fileEnding = media.content_type.replace(/.*\//g, "");
     const file = fs.createWriteStream(`downloads/${media.sid}.${fileEnding}`);
-    logger.write(`${media.sid}.${fileEnding} - ${message.from} - ${message.body}\n`) 
+    logger.write(
+      `${media.sid}.${fileEnding} - ${message.from} - ${message.body}\n`
+    );
 
     console.time(`Download ${media.sid}.${fileEnding}`);
 
@@ -60,6 +65,7 @@ client.messages.each(
       file.on("finish", () => {
         file.close();
         console.timeEnd(`Download ${media.sid}.${fileEnding}`);
+        console.log(`Saw ${senders.size} senders.`)
       });
     });
   }
