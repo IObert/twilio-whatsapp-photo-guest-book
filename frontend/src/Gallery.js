@@ -100,7 +100,7 @@ export default function Gallery() {
     <div className={classes.root}>
       {!isValidating && data[0].images.length === 0 ? (
         <Typography variant="subtitle1" align="center">
-          No images yet :)
+          Die Galerie ist noch leer :)
         </Typography>
       ) : (
         <ImageList
