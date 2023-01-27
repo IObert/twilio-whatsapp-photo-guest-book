@@ -39,7 +39,7 @@ const isLastPage = (pages) => {
 
 export default function Gallery() {
   const windowDimensions = useWindowDimensions();
-  const { data, error, isValidating, size, setSize } = useSWRInfinite(
+  const { data, error, isLoading, size, setSize } = useSWRInfinite(
     getKey,
     fetcher,
     {
@@ -49,13 +49,13 @@ export default function Gallery() {
   );
   const refLoader = useRef(null);
   const isOnScreen = useOnScreen(refLoader, "50px");
-  window.setSize = setSize;
 
-  // useEffect(() => {
-  //   if (isOnScreen && !isValidating) {
-  //     setSize(size + 1);
-  //   }
-  // }, [isOnScreen, isValidating,size]);
+  useEffect(() => {
+    if (isOnScreen && !isLoading) {
+      debugger
+      setSize(size + 1);
+    }
+  }, [isOnScreen, isLoading]);
 
   const [index, setIndex] = useState(-1);
 
@@ -95,14 +95,14 @@ export default function Gallery() {
         zoomSpeed={2}
         images={files}
       />
-      <div sx={{
+      <div style={{
         marginTop: "10px",
         width: "100%",
         flexWrap: "wrap",
         justifyContent: "space-around",
         overflow: "hidden",
       }}>
-        {!isValidating && data[0].files.length === 0 ? (
+        {!isLoading && data[0].files.length === 0 ? (
           <Typography variant="subtitle1" align="center">
             There Gallery is still empty :)
           </Typography>
@@ -113,16 +113,18 @@ export default function Gallery() {
             rowHeight={200}
           >
             {files.map((media, imageIdx) =>
-              media ? (
-                <ImageListItem
-                  key={`list-${imageIdx}`}
-                  cols={1}
-                  rows={1}
-                  onClick={() => {
-                    media.contentType.indexOf("video") && setIndex(imageIdx);
-                  }}
-                >
-                  {media.contentType.indexOf("video") ? (
+              <ImageListItem
+                key={`list-${imageIdx}`}
+                cols={1}
+                rows={1}
+                onClick={() => {
+                  media.contentType.indexOf("video") && setIndex(imageIdx);
+                }}
+              >
+                {!media ? (
+                  <Skeleton variant="rect" height="100%" />
+                ) : (
+                  media.contentType.indexOf("video") ? (
                     <img src={media.src} alt={media.caption} loading="lazy" />
                   ) : (
                     <video autoPlay controls muted loop style={{
@@ -133,22 +135,14 @@ export default function Gallery() {
                       <source src={media.src} type={media.contentType} />
                       Your browser does not support the video tag.
                     </video>
-                  )}
-                  {media.caption && <ImageListItemBar title={media.caption} />}
-                </ImageListItem>
-              ) : (
-                <Box
-                  key={`list-${imageIdx}`}
-                  sx={{
-                    boxSizing: "border-box",
-                  }}
-                >
-                  <Skeleton variant="rect" height="100%" />
-                </Box>
-              )
+                  ))}
+                {media && media.caption && <ImageListItemBar title={media.caption} />}
+              </ImageListItem>
+
             )}
           </ImageList>
         )}
+
         {
           <LinearProgress
             ref={refLoader}
