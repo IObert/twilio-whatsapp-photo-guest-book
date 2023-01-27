@@ -1,9 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 function useOnScreen(ref, rootMargin = "25px") {
-  const [isIntersecting, setIntersecting] = React.useState(false);
+  const [isIntersecting, setIntersecting] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIntersecting(entry.isIntersecting),
       { rootMargin }
