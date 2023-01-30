@@ -1,6 +1,6 @@
 {
-  "short_name": "Galerie",
-  "name": "Hochzeitsgalerie",
+  "short_name": "guest-book",
+  "name": "photo-guest-book-webapp",
   "icons": [
     {
       "src": "favicon.ico",

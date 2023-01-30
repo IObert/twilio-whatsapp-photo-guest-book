@@ -12,7 +12,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" sx={{
             flexGrow: 1,
           }} >
-            Hochzeitsgalerie
+            Photo Guest Book
           </Typography>
         </Toolbar>
       </AppBar>
