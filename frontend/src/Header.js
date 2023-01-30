@@ -1,17 +1,17 @@
 import React from "react";
-import {
-  AppBar, Toolbar, Typography
-} from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 
 export default function ButtonAppBar() {
-
   return (
-    <div >
+    <div>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" sx={{
-            flexGrow: 1,
-          }} >
+          <Typography
+            variant="h6"
+            sx={{
+              flexGrow: 1,
+            }}
+          >
             Photo Guest Book
           </Typography>
         </Toolbar>
