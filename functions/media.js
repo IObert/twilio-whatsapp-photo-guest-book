@@ -6,7 +6,7 @@ const maskPhoneOptions = {
     unmaskedStartDigits: 5,
     unmaskedEndDigits: 4,
 };
-const PAGE_SIZE = 15; 
+const PAGE_SIZE = 15;
 
 exports.handler = async function (context, event, callback) {
     const client = context.getTwilioClient();
@@ -47,6 +47,7 @@ exports.handler = async function (context, event, callback) {
             const tags = message.body ? [{ value: message.body, title: "caption" }] : [];
 
             return {
+                id: media.sid,
                 src: url,
                 tags,
                 dateSent: message.dateSent,

@@ -1,22 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  ImageList, LinearProgress, Box,
-  Typography, ImageListItem, ImageListItemBar,
-  Alert, Skeleton
+  ImageList, LinearProgress,
+  Typography, Alert
 } from "@mui/material";
-
-
 import Viewer from 'react-viewer';
-
-import { format, register } from "timeago.js";
-
-import deLocal from "timeago.js/lib/lang/de";
+import { format } from "timeago.js";
+import useSWR from "swr"
 import useSWRInfinite from "swr/infinite";
+
+// import { format, register } from "timeago.js";
+// import deLocal from "timeago.js/lib/lang/de";
 import useWindowDimensions from "./useWindowDimensions";
 import useOnScreen from "./useOnScreen";
+import GalleryTile from "./GalleryTile";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
-register("de", deLocal);
+// register("de", deLocal);
 
 const getKey = (pageIndex, previousPageData) => {
   if (previousPageData && !previousPageData.pageToken) {
@@ -39,7 +38,8 @@ const isLastPage = (pages) => {
 
 export default function Gallery() {
   const windowDimensions = useWindowDimensions();
-  const { data, error, isLoading, size, setSize } = useSWRInfinite(
+  const { data: likes, error: likeerror, isLoading: isLikeLoading } = useSWR('/likes', fetcher, { refreshInterval: 0 })
+  const { data: filePages, error: fileError, isLoading: fileLoading, size: pageCount, setSize: setPage } = useSWRInfinite(
     getKey,
     fetcher,
     {
@@ -51,14 +51,14 @@ export default function Gallery() {
   const isOnScreen = useOnScreen(refLoader, "50px");
 
   useEffect(() => {
-    if (isOnScreen && !isLoading) {
-      setSize(size + 1);
+    if (isOnScreen && !fileLoading) {
+      setPage(pageCount + 1);
     }
-  }, [isOnScreen, isLoading]);
+  }, [isOnScreen, fileLoading]);
 
   const [index, setIndex] = useState(-1);
 
-  if (error) {
+  if (fileError) {
     return (
       <Alert variant="filled" severity="error" sx={{
         position: "absolute",
@@ -70,8 +70,8 @@ export default function Gallery() {
       </Alert>
     );
   }
-  const files = data
-    ? data.map((p) => p.files).flat()
+  const files = filePages
+    ? filePages.map((p) => p.files).flat()
     : [...Array(60)].map(() => null);
 
   files.filter(file => file && file.contentType.indexOf("video") === -1).forEach(image => {
@@ -101,7 +101,7 @@ export default function Gallery() {
         justifyContent: "space-around",
         overflow: "hidden",
       }}>
-        {!isLoading && data[0].files.length === 0 ? (
+        {!fileLoading && filePages[0].files.length === 0 ? (
           <Typography variant="subtitle1" align="center">
             There Gallery is still empty :)
           </Typography>
@@ -109,43 +109,15 @@ export default function Gallery() {
           <ImageList
             variant="quilted"
             cols={windowDimensions.width > windowDimensions.height ? 5 : 3}
-            rowHeight={200}
-          >
-            {files.map((media, imageIdx) =>
-              <ImageListItem
-                key={`list-${imageIdx}`}
-                cols={1}
-                rows={1}
-                onClick={() => {
-                  media.contentType.indexOf("video") && setIndex(imageIdx);
-                }}
-              >
-                {!media ? (
-                  <Skeleton variant="rect" height="100%" />
-                ) : (
-                  media.contentType.indexOf("video") ? (
-                    <img src={media.src} alt={media.caption} loading="lazy" />
-                  ) : (
-                    <video autoPlay controls muted loop style={{
-                      objectFit: "cover",
-                      width: "100%",
-                      height: "100%"
-                    }}>
-                      <source src={media.src} type={media.contentType} />
-                      Your browser does not support the video tag.
-                    </video>
-                  ))}
-                {media && media.caption && <ImageListItemBar title={media.caption} />}
-              </ImageListItem>
-
-            )}
+            rowHeight={200} >
+            {files.map((media, mediaIdx) => GalleryTile({ media, mediaIdx, likes, selectMedia: setIndex, showLike: !likeerror && !isLikeLoading, }))}
           </ImageList>
         )}
 
         {
           <LinearProgress
             ref={refLoader}
-            sx={!isLastPage(data) ? {
+            sx={!isLastPage(filePages) ? {
               marginTop: "2rem",
             } : {
               display: "none",
