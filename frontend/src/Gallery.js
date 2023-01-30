@@ -52,7 +52,6 @@ export default function Gallery() {
 
   useEffect(() => {
     if (isOnScreen && !isLoading) {
-      debugger
       setSize(size + 1);
     }
   }, [isOnScreen, isLoading]);
