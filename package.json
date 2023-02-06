@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "debug": "node ./test.js ",
     "download": "node ./download.js ",
     "start": "twilio-run",
     "deploy": "twilio-run deploy",
@@ -14,10 +13,10 @@
   "dependencies": {
     "@twilio/runtime-handler": "1.3.0",
     "airtable": "^0.11.6",
-    "axios": "^1.2.4",
+    "axios": "^1.3.2",
     "maskdata": "^1.2.0",
     "timeago.js": "^4.0.2",
-    "twilio": "^3.56"
+    "twilio": "^3.84"
   },
   "devDependencies": {
     "prettier": "2.8.3",
