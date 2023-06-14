@@ -53,7 +53,12 @@ export default function GalleryTile({
           actionIcon={
             showLike && (
               <IconButton
-                sx={{ color: "rgba(255, 255, 255, 0.3)" }}
+                sx={{
+                  color: "rgba(255, 255, 255, 0.6)",
+                  "&.Mui-disabled": {
+                    color: "rgba(255, 255, 255, 0.8)",
+                  }
+                }}
                 disabled={Boolean(localStorage.getItem(media.id))}
                 onClick={function (event) {
                   event.stopPropagation();
