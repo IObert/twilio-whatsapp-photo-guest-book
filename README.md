@@ -1,24 +1,24 @@
 # Photo Sharing with WhatsApp
 
-Birthday parties, weddings, anniversaries, and other social events are always great gatherings where we create memories that last a lifetime. At these events, everyone is a photographer who tries to capture the best moments on their phone and possibly share them with the host afterward. But other guests usually never see the photos because they are not shared with the entire party. A common solution to this is using photo-sharing apps, on which you can upload the photos you took. 
+Birthday parties, weddings, anniversaries, and other social events are always great gatherings where we create memories that last a lifetime. At these events, everyone is a photographer who tries to capture the best moments on their phone and possibly share them with the host afterward. But other guests usually never see the photos because they are not shared with the entire party. A common solution to this is using photo-sharing apps, on which you can upload the photos you took.
 
 The problem with these apps is that they first need to be installed by everyone and often have a complicated setup process. And in the end, only a tiny fraction of the guests share their memories.
-To combat that, I decided to build on top of a messenger that almost everyone already uses: WhatsApp. Hence, WhatsApp users already know how to send pictures and receive messages with the app. 
-
+To combat that, I decided to build on top of a messenger that almost everyone already uses: WhatsApp. Hence, WhatsApp users already know how to send pictures and receive messages with the app.
 
 ![Running demo on a phone and desktop](./docs/CombinedDemo.jpg)
 
 ## Prerequisites
- - [Node.js](https://nodejs.org/en/) installed.
- - An upgraded [Twilio account](https://www.twilio.com/try-twilio).
- - Install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/getting-started/install).
- - [Buy a number](https://support.twilio.com/hc/en-us/articles/223135247-How-to-Search-for-and-Buy-a-Twilio-Phone-Number-from-Console) you want to use and [enable it for WhatsApp](https://www.twilio.com/docs/whatsapp/tutorial/connect-number-business-profile).
+
+- [Node.js](https://nodejs.org/en/) installed.
+- An upgraded [Twilio account](https://www.twilio.com/try-twilio).
+- Install the [Twilio CLI](https://www.twilio.com/docs/twilio-cli/getting-started/install).
+- [Buy a number](https://support.twilio.com/hc/en-us/articles/223135247-How-to-Search-for-and-Buy-a-Twilio-Phone-Number-from-Console) you want to use and [enable it for WhatsApp](https://www.twilio.com/docs/whatsapp/tutorial/connect-number-business-profile).
 
 ## Setup
 
 - Create a [Sync Service](https://www.twilio.com/docs/sync) that contains a [Document Resource](https://www.twilio.com/docs/sync/api/document-resource)
-- *Optional* Create a [Messaging Service](https://support.twilio.com/hc/en-us/articles/223181308-Getting-started-with-Messaging-Services)
-- Copy `.env_example` to `.env` and replace the listed environment variables 
+- _Optional_ Create a [Messaging Service](https://support.twilio.com/hc/en-us/articles/223181308-Getting-started-with-Messaging-Services)
+- Copy `.env_example` to `.env` and replace the listed environment variables
 - Deploy the project
 
   ```bash
@@ -64,7 +64,7 @@ To download all received media files, you need to run the following script and w
 npm run download
 ```
 
-## Reset the gallery 
+## Reset the gallery
 
 Run the following script the clear the gallery and reset the application.
 
