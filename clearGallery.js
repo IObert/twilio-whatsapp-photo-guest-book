@@ -8,7 +8,7 @@ console.log(
   `Clearing whatsapp messages for account ${process.env.ACCOUNT_SID}.`
 );
 
-async () => {
+(async () => {
   const sentMessages = await client.messages.list({
     from: `whatsapp:${process.env.NUMBER}`,
   });
@@ -26,4 +26,4 @@ async () => {
       sentMessages.length + receivedMessages.length
     } WhatsApp messages successfully.`
   );
-};
+})();
